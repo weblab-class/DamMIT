@@ -1,0 +1,25 @@
+.Card-container {
+  border-radius: 60px;
+  margin-top: var(--m);
+  background-color: var(--blue);
+}
+
+.Card-container:first-of-type {
+  margin-top: var(--l);
+}
+
+.Card-challengeUser {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.Card-challengeTitle {
+  font-size: var(--xl);
+  color: var(--darkblue);
+  margin: var(--s) 0 0;
+}
+
+.Card-challengeContent {
+  font-size: var(--l);
+  margin: var(--s) 0 0;
+}
