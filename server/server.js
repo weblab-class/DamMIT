@@ -59,14 +59,22 @@ mongoose
 // Function to insert a hardcoded challenge into the database
 const insertHardcodedChallenge = async () => {
   try {
-    const existingChallenge = await Challenge.findOne({ title: "Coding Challenge" });
+    const existingChallenge = await Challenge.findOne({
+      title: "Visit All Frats",
+    });
     if (!existingChallenge) {
       const challenge = new Challenge({
         creator_id: "123",
-        creator_name: "John Doe",
-        content: "Complete the coding challenge!",
-        title: "Coding Challenge",
-        likes: 10,
+        creator_name: "Paulinho",
+        content:
+          "Yeah, I know we’ve all been too locked in the past few weeks. Let’s just chill for a bit and have some fun going to parties at ALL MIT frats!",
+        title: "Visit All Frats",
+        likes: 617,
+        difficulty: 2.43,
+        num_completed: 234,
+        timestamp: new Date(
+          Date.now() - Math.floor(Math.random() * 10000000000)
+        ),
       });
       await challenge.save();
       console.log("Hardcoded challenge inserted into the database.");

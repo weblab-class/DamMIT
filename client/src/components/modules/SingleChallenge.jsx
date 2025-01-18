@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
  * @param {number} difficulty
  * @param {boolean} likedByUser
  * @param {boolean} addedToTodo
+ * @param {number} num_completed
  */
 const SingleChallenge = (props) => {
   return (
@@ -23,16 +24,21 @@ const SingleChallenge = (props) => {
       </Link>
       <p className="Card-challengeTitle">{props.title}</p>
       <p className="Card-challengeContent">{props.content}</p>
-      <p className="Card-challengeLikes">Likes: {props.likes}</p>
-      <p className="Card-challengeDifficulty">
-        Current Difficulty: {props.difficulty}
-      </p>
-      <p className="Card-challengeLiked">
-        Liked by you: {props.likedByUser ? "Yes" : "No"}
-      </p>
-      <p className="Card-challengeTodo">
-        Added to your to-do list: {props.addedToTodo ? "Yes" : "No"}
-      </p>
+      <div className="Card-challengeInfo">
+        <p className="Card-challengeLiked">
+          Liked by you: {props.likedByUser ? "Yes" : "No"}
+        </p>
+        <p className="Card-challengeTodo">
+          Added to your to-do list: {props.addedToTodo ? "Yes" : "No"}
+        </p>
+        <p className="Card-challengeCompleted">
+          {props.num_completed} Completed
+        </p>
+        <p className="Card-challengeDifficulty">
+          Current Difficulty: {props.difficulty}
+        </p>
+        <p className="Card-challengeLikes">{props.likes} Likes</p>
+      </div>
     </div>
   );
 };

@@ -1,17 +1,20 @@
 .NavBar-container {
+  display: flex;
+  justify-content: space-between; /* Ensures space between title and tabs */
+  align-items: center; /* Vertically centers the items */
   padding: var(--s) var(--m);
-  background-color: var(--white);
 }
 
 .NavBar-title {
-  color: var(--white);
+  color: var(--red);
   font-size: var(--xl);
   font-family: "Bevan";
   font-style: italic;
+  font-weight: bold;
 }
 
 .NavBar-linkContainer {
-  margin-left: var(--l);
+  margin-left: auto; /* Moves the link container to the right */
 }
 
 .NavBar-link,
@@ -20,6 +23,7 @@
   opacity: 0.6;
   text-decoration: none;
   font-size: var(--m);
+  margin-right: var(--xl);
 }
 
 .NavBar-link:hover {

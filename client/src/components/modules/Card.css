@@ -16,15 +16,29 @@
 .Card-challengeTitle {
   font-size: var(--xl);
   color: var(--darkblue);
-  margin: var(--s) 0 0;
+  margin: var(--m) 0 0;
+}
+
+.Card-challengeInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: var(--m) 0;
 }
 
 .Card-challengeContent {
   font-size: var(--l);
-  margin: var(--s) 0 0;
+  color: var(--darkblue);
+  margin: var(--m) 0 0;
 }
 
 .Card-challengeLikes {
+  font-size: var(--l);
+  color: var(--red);
+  margin: var(--s) 0;
+}
+
+.Card-challengeCompleted {
   font-size: var(--l);
   color: var(--red);
   margin: var(--s) 0;

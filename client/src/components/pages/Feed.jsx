@@ -7,19 +7,20 @@ import { get } from "../../utilities";
 
 const Feed = () => {
   let props = useOutletContext();
+  // hardcoded challenge, change this later
   const [challenges, setChallenges] = useState([]);
 
   // called when the "Feed" component "mounts", i.e.
   // when it shows up on screen
   useEffect(() => {
     document.title = "News Feed";
-    get("/api/challenges")
-      .then((challengeObjs) => {
-        setChallenges(challengeObjs.reverse());
-      })
-      .catch((error) => {
-        console.error("Error fetching challenges:", error);
-      });
+    get("/api/challenges").then((challengeObjs) => {
+      let reversedChallengeObjs = challengeObjs.reverse();
+      setChallenges((prevChallenges) => [
+        ...prevChallenges,
+        ...reversedChallengeObjs,
+      ]);
+    });
   }, []);
 
   // this gets called when the user pushes "Submit", so their
@@ -44,6 +45,7 @@ const Feed = () => {
         difficulty={challengeObj.difficulty}
         likedByUser={challengeObj.likedByUser}
         addedToTodo={challengeObj.addedToTodo}
+        num_completed={challengeObj.num_completed}
       />
     ));
   } else {
