@@ -25,7 +25,7 @@ const GOOGLE_CLIENT_ID =
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route errorElement={<NotFound />} element={<App />}>
-      <Route path="/" element={<Feed />} />
+      <Route path="/" element={<Skeleton />} />
       <Route path="/profile/:userId" element={<Profile />} />
       <Route path="/todo/" element={<ToDoList />} />
       <Route path="/leaderboard/" element={<Leaderboard />} />

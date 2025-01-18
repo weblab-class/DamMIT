@@ -15,7 +15,7 @@ const NavBar = (props) => {
         <Link to="/" className="NavBar-link">
           Home
         </Link>
-        <Link to="/post" className="NavBar-link u-inlineBlock">
+        <Link to="/newchallenge/" className="NavBar-link u-inlineBlock">
           New Challenge
         </Link>
         <Link to="/todo/" className="NavBar-link u-inlineBlock">

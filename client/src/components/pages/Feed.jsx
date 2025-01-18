@@ -7,7 +7,20 @@ import { get } from "../../utilities";
 
 const Feed = () => {
   let props = useOutletContext();
-  const [challenges, setChallenges] = useState([]);
+  // hardcoded challenge, change this later
+  const [challenges, setChallenges] = useState([
+    {
+      _id: "1",
+      creator_name: "John Doe",
+      creator_id: "123",
+      content: "Complete the coding challenge!",
+      title: "Coding Challenge",
+      likes: 10,
+      difficulty: 3.5,
+      likedByUser: true,
+      addedToTodo: false,
+    },
+  ]);
 
   // called when the "Feed" component "mounts", i.e.
   // when it shows up on screen
@@ -15,7 +28,10 @@ const Feed = () => {
     document.title = "News Feed";
     get("/api/challenges").then((challengeObjs) => {
       let reversedChallengeObjs = challengeObjs.reverse();
-      setChallenges(reversedChallengeObjs);
+      setChallenges((prevChallenges) => [
+        ...prevChallenges,
+        ...reversedChallengeObjs,
+      ]);
     });
   }, []);
 
@@ -36,6 +52,11 @@ const Feed = () => {
         creator_id={challengeObj.creator_id}
         userId={props.userId}
         content={challengeObj.content}
+        title={challengeObj.title}
+        likes={challengeObj.likes}
+        difficulty={challengeObj.difficulty}
+        likedByUser={challengeObj.likedByUser}
+        addedToTodo={challengeObj.addedToTodo}
       />
     ));
   } else {
