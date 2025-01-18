@@ -1,6 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
+import NavBarLink from "./NavBarLink";
+import { FaHome, FaPlusCircle, FaList, FaTrophy } from "react-icons/fa";
+import { MdAccountCircle } from "react-icons/md";
 
 import "./NavBar.css";
 
@@ -9,47 +12,41 @@ import "./NavBar.css";
  */
 const NavBar = (props) => {
   return (
-    <nav className="NavBar-container">
-      <div className="NavBar-title u-inlineBlock">DamMIT</div>
-      <div className="NavBar-linkContainer u-inlineBlock">
-        <Link to="/" className="NavBar-link">
-          Home
-        </Link>
-        <Link to="/newchallenge/" className="NavBar-link u-inlineBlock">
-          New Challenge
-        </Link>
-        <Link to="/todo/" className="NavBar-link u-inlineBlock">
-          To Do List
-        </Link>
-        <Link to="/leaderboard/" className="NavBar-link u-inlineBlock">
-          Leaderboard
-        </Link>
+    <nav className="NavBar">
+      <div className="NavBar-title">DamMIT</div>
+      <ul className="NavBar-list">
+        <NavBarLink icon={FaHome} name="Home" to="/" />
+        <NavBarLink
+          icon={FaPlusCircle}
+          name="New Challenge"
+          to="/newchallenge/"
+        />
+        <NavBarLink icon={FaList} name="To Do List" to="/todo/" />
+        <NavBarLink icon={FaTrophy} name="Leaderboard" to="/leaderboard/" />
         {props.userId && (
-          <Link
+          <NavBarLink
+            icon={MdAccountCircle}
+            name="My Profile"
             to={`/profile/${props.userId}`}
-            className="NavBar-link u-inlineBlock"
-          >
-            My Profile
-          </Link>
+          />
         )}
         {props.userId ? (
           <button
-            className="NavBar-link NavBar-login u-inlineBlock"
+            className="NavBar-link NavBar-login"
             onClick={props.handleLogout}
           >
             Sign out
           </button>
         ) : (
           <GoogleLogin
-            text="signin_with"
             onSuccess={props.handleLogin}
             onFailure={(err) => console.log(err)}
             containerProps={{
-              className: "NavBar-link NavBar-login u-inlineBlock",
+              className: "NavBar-link NavBar-login",
             }}
           />
         )}
-      </div>
+      </ul>
     </nav>
   );
 };

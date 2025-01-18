@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { FaHeart, FaSquarePlus } from "react-icons/fa6";
+import "../../utilities.css";
 
 /**
  * Challenge is a component that renders creator and content of a challenge
@@ -17,27 +19,49 @@ import { Link } from "react-router-dom";
  * @param {number} num_completed
  */
 const SingleChallenge = (props) => {
+  const [isLiked, setIsLiked] = useState(props.likedByUser);
+  const [likes, setLikes] = useState(props.likes);
+  const [isAddedToTodo, setIsAddedToTodo] = useState(props.addedToTodo);
+
+  const toggleLike = () => {
+    setIsLiked(!isLiked);
+    setLikes(isLiked ? likes - 1 : likes + 1);
+  };
+
+  const toggleAddToTodo = () => {
+    setIsAddedToTodo(!isAddedToTodo);
+  };
+
   return (
     <div className="Card-challenge">
-      <Link to={`/profile/${props.creator_id}`} className="u-link u-bold">
-        {props.creator_name}
-      </Link>
       <p className="Card-challengeTitle">{props.title}</p>
       <p className="Card-challengeContent">{props.content}</p>
-      <div className="Card-challengeInfo">
-        <p className="Card-challengeLiked">
-          Liked by you: {props.likedByUser ? "Yes" : "No"}
-        </p>
-        <p className="Card-challengeTodo">
-          Added to your to-do list: {props.addedToTodo ? "Yes" : "No"}
-        </p>
-        <p className="Card-challengeCompleted">
-          {props.num_completed} Completed
-        </p>
-        <p className="Card-challengeDifficulty">
-          Current Difficulty: {props.difficulty}
-        </p>
-        <p className="Card-challengeLikes">{props.likes} Likes</p>
+      <div className="Card-challengeFooter">
+        <div className="Card-challengeIcons">
+          <p className="Card-challengeLiked" onClick={toggleLike} style={{ cursor: "pointer" }}>
+            {isLiked ? (
+              <FaHeart color="#e63946" size={30} />
+            ) : (
+              <FaHeart color="#457b9d" size={30} />
+            )}
+          </p>
+          <p className="Card-challengeTodo" onClick={toggleAddToTodo} style={{ cursor: "pointer" }}>
+            {isAddedToTodo ? (
+              <FaSquarePlus color="#1d3557" size={30} />
+            ) : (
+              <FaSquarePlus color="#457b9d" size={30} />
+            )}
+          </p>
+        </div>
+        <div className="Card-challengeDetails">
+          <p className="Card-challengeCompleted">
+            {props.num_completed} Completed
+          </p>
+          <p className="Card-challengeDifficulty">
+            Current Difficulty: {props.difficulty}
+          </p>
+          <p className="Card-challengeLikes">{likes} Likes</p>
+        </div>
       </div>
     </div>
   );

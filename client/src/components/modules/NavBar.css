@@ -1,29 +1,38 @@
-.NavBar-container {
+.NavBar {
   display: flex;
-  justify-content: space-between; /* Ensures space between title and tabs */
-  align-items: center; /* Vertically centers the items */
-  padding: var(--s) var(--m);
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--m) var(--l);
 }
 
 .NavBar-title {
-  color: var(--red);
+  font-family: "Bevan", sans-serif;
   font-size: var(--xl);
-  font-family: "Bevan";
-  font-style: italic;
   font-weight: bold;
+  font-style: italic;
+  color: var(--red);
 }
 
-.NavBar-linkContainer {
-  margin-left: auto; /* Moves the link container to the right */
+.NavBar-list {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  margin-left: auto; /* Moves all links to the right */
 }
 
 .NavBar-link,
 .NavBar-link:visited {
-  color: var(--medblue);
-  opacity: 0.6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-decoration: none;
-  font-size: var(--m);
+  color: inherit;
   margin-right: var(--xl);
+  color: var(--medblue);
+  font-size: var(--m);
 }
 
 .NavBar-link:hover {

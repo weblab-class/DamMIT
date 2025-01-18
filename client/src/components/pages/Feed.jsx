@@ -1,38 +1,39 @@
 import React, { useState, useEffect } from "react";
 import Card from "../modules/Card";
-import { NewChallenge } from "../modules/NewChallengeInput";
 import { useOutletContext } from "react-router-dom";
 
 import { get } from "../../utilities";
+import "./Feed.css";
 
 const Feed = () => {
   let props = useOutletContext();
-  // hardcoded challenge, change this later
   const [challenges, setChallenges] = useState([]);
+  const [sortOption, setSortOption] = useState('mostLiked');
 
   // called when the "Feed" component "mounts", i.e.
   // when it shows up on screen
   useEffect(() => {
     document.title = "News Feed";
     get("/api/challenges").then((challengeObjs) => {
-      let reversedChallengeObjs = challengeObjs.reverse();
-      setChallenges((prevChallenges) => [
-        ...prevChallenges,
-        ...reversedChallengeObjs,
-      ]);
+      setChallenges(challengeObjs);
     });
   }, []);
 
-  // this gets called when the user pushes "Submit", so their
-  // post gets added to the screen right away
-  const addNewChallenge = (challengeObj) => {
-    setChallenges([challengeObj].concat(challenges));
-  };
+  const sortedChallenges = [...challenges].sort((a, b) => {
+    if (sortOption === 'mostLiked') {
+      return b.likes - a.likes;
+    } else if (sortOption === 'onTrend') {
+      return b.num_completed - a.num_completed;
+    } else if (sortOption === 'new') {
+      return new Date(b.postedDate) - new Date(a.postedDate);
+    }
+    return 0;
+  });
 
   let challengesList = null;
-  const hasChallenges = challenges.length !== 0;
+  const hasChallenges = sortedChallenges.length !== 0;
   if (hasChallenges) {
-    challengesList = challenges.map((challengeObj) => (
+    challengesList = sortedChallenges.map((challengeObj) => (
       <Card
         key={`Card_${challengeObj._id}`}
         _id={challengeObj._id}
@@ -51,9 +52,14 @@ const Feed = () => {
   } else {
     challengesList = <div>No Challenges!</div>;
   }
+
   return (
     <>
-      {props.userId && <NewChallenge addNewChallenge={addNewChallenge} />}
+      <div className="tabs">
+        <button className={sortOption === 'mostLiked' ? 'active' : ''} onClick={() => setSortOption('mostLiked')}>Most Liked</button>
+        <button className={sortOption === 'onTrend' ? 'active' : ''} onClick={() => setSortOption('onTrend')}>On Trend</button>
+        <button className={sortOption === 'new' ? 'active' : ''} onClick={() => setSortOption('new')}>New</button>
+      </div>
       {challengesList}
     </>
   );

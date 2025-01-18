@@ -2,6 +2,10 @@
   border-radius: 60px;
   margin-top: var(--m);
   background-color: var(--blue);
+  padding: var(--m) var(--xl);
+  width: 80%;
+  margin: auto;
+  margin-bottom: var(--m);
 }
 
 .Card-container:first-of-type {
@@ -24,6 +28,24 @@
   justify-content: space-between;
   align-items: center;
   margin: var(--m) 0;
+  gap: var(--l);
+}
+
+.Card-challengeIcons,
+.Card-challengeDetails {
+  display: flex;
+  gap: var(--xl);
+}
+
+.Card-challengeIcons {
+  display: flex;
+  gap: var(--m);
+}
+
+.Card-challengeDetails {
+  display: flex;
+  flex-direction: row;
+  gap: var(--xl);
 }
 
 .Card-challengeContent {
@@ -60,4 +82,21 @@
   font-size: var(--l);
   color: var(--medblue);
   margin: var(--s) 0;
+}
+
+.Card-challengeFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--l);
+}
+
+.Card-challengeIcons {
+  display: flex;
+  gap: var(--m);
+}
+
+.Card-challengeDetails {
+  display: flex;
+  gap: var(--m);
 }

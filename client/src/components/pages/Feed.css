@@ -1,0 +1,27 @@
+.tabs {
+  display: flex;
+  justify-content: center;
+  margin: 40px 0; /* Increased margin for more space */
+}
+
+.tabs button {
+  background-color: transparent;
+  border: none;
+  font-size: var(--l);
+  margin: 0 150px;
+  padding: 10px;
+  cursor: pointer;
+  color: var(--medblue);
+  transition: color 0.3s ease;
+  font-weight: bold;
+}
+
+.tabs button:hover {
+  color: var(--darkblue);
+}
+
+.tabs button.active {
+  color: var(--darkblue);
+  font-weight: bold;
+  border-bottom: 2px solid var(--darkblue);
+}
