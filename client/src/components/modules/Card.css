@@ -23,3 +23,27 @@
   font-size: var(--l);
   margin: var(--s) 0 0;
 }
+
+.Card-challengeLikes {
+  font-size: var(--l);
+  color: var(--red);
+  margin: var(--s) 0;
+}
+
+.Card-challengeDifficulty {
+  font-size: var(--l);
+  color: var(--red);
+  margin: var(--s) 0;
+}
+
+.Card-challengeLiked {
+  font-size: var(--l);
+  color: var(--medblue);
+  margin: var(--s) 0;
+}
+
+.Card-challengeTodo {
+  font-size: var(--l);
+  color: var(--medblue);
+  margin: var(--s) 0;
+}

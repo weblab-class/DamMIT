@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Card from "../modules/Card";
-import { NewStory } from "../modules/NewPostInput";
+import { NewChallenge } from "../modules/NewChallengeInput";
 import { useOutletContext } from "react-router-dom";
 
 import { get } from "../../utilities";
@@ -15,7 +15,7 @@ const Feed = () => {
     document.title = "News Feed";
     get("/api/challenges").then((challengeObjs) => {
       let reversedChallengeObjs = challengeObjs.reverse();
-      setStories(reversedChallengeObjs);
+      setChallenges(reversedChallengeObjs);
     });
   }, []);
 

@@ -3,12 +3,17 @@ import ReactDOM from "react-dom/client";
 import App from "./components/App";
 import Skeleton from "./components/pages/Skeleton";
 import NotFound from "./components/pages/NotFound";
+import Profile from "./components/pages/Profile";
+import Feed from "./components/pages/Feed";
+import ToDoList from "./components/pages/ToDoList";
+import Leaderboard from "./components/pages/Leaderboard";
 
 import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
   RouterProvider,
+  useNavigate,
 } from "react-router-dom";
 
 import { GoogleOAuthProvider } from "@react-oauth/google";
@@ -20,7 +25,11 @@ const GOOGLE_CLIENT_ID =
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route errorElement={<NotFound />} element={<App />}>
-      <Route path="/" element={<Skeleton />} />
+      <Route path="/" element={<Feed />} />
+      <Route path="/profile/:userId" element={<Profile />} />
+      <Route path="/todo/" element={<ToDoList />} />
+      <Route path="/leaderboard/" element={<Leaderboard />} />
+      <Route path="/newchallenge" element={<CreateNewChallenge />} />
     </Route>
   )
 );

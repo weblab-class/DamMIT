@@ -13,6 +13,10 @@ import "./Card.css";
  * @param {string} creator_id
  * @param {string} content of the challenge
  * @param {string} title of the challenge
+ * @param {number} likes
+ * @param {number} difficulty
+ * @param {boolean} likedByUser
+ * @param {boolean} addedToTodo
  */
 const Card = (props) => {
   return (
@@ -23,6 +27,10 @@ const Card = (props) => {
         creator_id={props.creator_id}
         content={props.content}
         title={props.title}
+        likes={props.likes}
+        difficulty={props.difficulty}
+        likedByUser={props.likedByUser}
+        addedToTodo={props.addedToTodo}
       />
     </div>
   );
