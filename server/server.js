@@ -30,6 +30,7 @@ const path = require("path"); // provide utilities for working with file and dir
 
 const api = require("./api");
 const auth = require("./auth");
+const Challenge = require("./models/challenge");
 
 // socket stuff
 const socketManager = require("./server-socket");
@@ -54,6 +55,31 @@ mongoose
   })
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.log(`Error connecting to MongoDB: ${err}`));
+
+// Function to insert a hardcoded challenge into the database
+const insertHardcodedChallenge = async () => {
+  try {
+    const existingChallenge = await Challenge.findOne({ title: "Coding Challenge" });
+    if (!existingChallenge) {
+      const challenge = new Challenge({
+        creator_id: "123",
+        creator_name: "John Doe",
+        content: "Complete the coding challenge!",
+        title: "Coding Challenge",
+        likes: 10,
+      });
+      await challenge.save();
+      console.log("Hardcoded challenge inserted into the database.");
+    } else {
+      console.log("Hardcoded challenge already exists in the database.");
+    }
+  } catch (error) {
+    console.error("Error inserting hardcoded challenge:", error);
+  }
+};
+
+// Call the function to insert the hardcoded challenge
+insertHardcodedChallenge();
 
 // create a new express server
 const app = express();

@@ -5,7 +5,7 @@ import { get } from "../../utilities";
 import "./Card.css";
 
 /**
- * Card is a component for displaying content like stories
+ * Card is a component for displaying challenges
  *
  * Proptypes
  * @param {string} _id of the challenge

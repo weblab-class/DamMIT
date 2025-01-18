@@ -7,6 +7,7 @@ import Profile from "./components/pages/Profile";
 import Feed from "./components/pages/Feed";
 import ToDoList from "./components/pages/ToDoList";
 import Leaderboard from "./components/pages/Leaderboard";
+import CreateNewChallenge from "./components/pages/CreateNewChallenge";
 
 import {
   createBrowserRouter,
@@ -25,11 +26,11 @@ const GOOGLE_CLIENT_ID =
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route errorElement={<NotFound />} element={<App />}>
-      <Route path="/" element={<Skeleton />} />
+      <Route path="/" element={<Feed />} />
       <Route path="/profile/:userId" element={<Profile />} />
       <Route path="/todo/" element={<ToDoList />} />
       <Route path="/leaderboard/" element={<Leaderboard />} />
-      <Route path="/newchallenge" element={<CreateNewChallenge />} />
+      <Route path="/newchallenge/" element={<CreateNewChallenge />} />
     </Route>
   )
 );

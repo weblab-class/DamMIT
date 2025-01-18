@@ -1,5 +1,6 @@
 import React, { useState, useEffect, createContext } from "react";
 import { Outlet } from "react-router-dom";
+import NavBar from "./modules/NavBar";
 
 import jwt_decode from "jwt-decode";
 
@@ -41,16 +42,19 @@ const App = () => {
     post("/api/logout");
   };
 
-  const authContextValue = {
-    userId,
-    handleLogin,
-    handleLogout,
-  };
-
   return (
-    <UserContext.Provider value={authContextValue}>
-      <Outlet />
-    </UserContext.Provider>
+    // <> is like a <div>, but won't show
+    // up in the DOM tree
+    <>
+      <NavBar
+        handleLogin={handleLogin}
+        handleLogout={handleLogout}
+        userId={userId}
+      />
+      <div className="App-container">
+        <Outlet context={{ userId: userId }} />
+      </div>
+    </>
   );
 };
 
