@@ -26,17 +26,24 @@ const SingleChallenge = (props) => {
   const [likes, setLikes] = useState(props.likes);
   const [isAddedToTodo, setIsAddedToTodo] = useState(props.addedToTodo);
   const [isComplete, setIsComplete] = useState(props.completed);
+  const [numCompleted, setNumCompleted] = useState(props.num_completed);
 
   const toggleLike = async () => {
     const updatedLikeStatus = !isLiked;
     setIsLiked(updatedLikeStatus);
-    setLikes(updatedLikeStatus ? likes + 1 : likes - 1);
 
     try {
       await post(`/api/challenge/${props._id}/like`, {
         userId: props.userId,
         like: updatedLikeStatus,
       });
+
+      // Update the number of likes locally
+      if (updatedLikeStatus) {
+        setLikes((prev) => prev + 1);
+      } else {
+        setLikes((prev) => Math.max(0, prev - 1));
+      }
     } catch (error) {
       console.error("Error updating like status:", error);
     }
@@ -65,6 +72,13 @@ const SingleChallenge = (props) => {
         userId: props.userId,
         complete: updatedCompleteStatus,
       });
+
+      // Update the number of completions locally
+      if (updatedCompleteStatus) {
+        setNumCompleted((prev) => prev + 1);
+      } else {
+        setNumCompleted((prev) => Math.max(0, prev - 1));
+      }
     } catch (error) {
       console.error("Error updating complete status:", error);
     }
@@ -115,9 +129,11 @@ const SingleChallenge = (props) => {
             Current Difficulty: {props.difficulty}
           </p>
           <p className="Card-challengeCompleted">
-            {props.num_completed} Completed
+            {numCompleted} Completed
           </p>
-          <p className="Card-challengeLikes">{likes} Likes</p>
+          <p className="Card-challengeLikes">
+            {likes} Likes
+          </p>
         </div>
       </div>
     </div>

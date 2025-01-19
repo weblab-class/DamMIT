@@ -85,24 +85,32 @@ router.get("/user/:userId/likes", async (req, res) => {
   }
 });
 
-router.post("/challenge/:id/like", async (req, res) => {
+router.post('/challenge/:id/like', async (req, res) => {
   try {
     const { userId, like } = req.body;
     const user = await User.findById(userId);
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const challenge = await Challenge.findById(req.params.id);
+    if (!challenge) {
+      return res.status(404).json({ error: 'Challenge not found' });
     }
 
     if (like) {
       user.likedChallenges.addToSet(req.params.id);
+      challenge.likes += 1;
     } else {
       user.likedChallenges.pull(req.params.id);
+      challenge.likes = Math.max(0, challenge.likes - 1);
     }
 
     await user.save();
+    await challenge.save();
     res.status(200).json({ success: true });
   } catch (error) {
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
@@ -159,13 +167,21 @@ router.post('/challenge/:id/complete', async (req, res) => {
       return res.status(404).json({ error: 'User not found' });
     }
 
+    const challenge = await Challenge.findById(req.params.id);
+    if (!challenge) {
+      return res.status(404).json({ error: 'Challenge not found' });
+    }
+
     if (complete) {
       user.completedChallenges.addToSet(req.params.id);
+      challenge.num_completed += 1;
     } else {
       user.completedChallenges.pull(req.params.id);
+      challenge.num_completed = Math.max(0, challenge.num_completed - 1);
     }
 
     await user.save();
+    await challenge.save();
     res.status(200).json({ success: true });
   } catch (error) {
     res.status(500).json({ error: 'Internal server error' });
