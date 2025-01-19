@@ -188,6 +188,24 @@ router.post('/challenge/:id/complete', async (req, res) => {
   }
 });
 
+router.post('/challenge/new', async (req, res) => {
+  try {
+    const { title, description } = req.body;
+    const newChallenge = new Challenge({
+      title,
+      content: description,
+      creator_id: req.user._id, // Assuming user is authenticated
+      creator_name: req.user.name, // Assuming user is authenticated
+      likes: 0,
+      num_completed: 0,
+    });
+    await newChallenge.save();
+    res.status(201).json({ success: true, challenge: newChallenge });
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
   console.log(`API route not found: ${req.method} ${req.url}`);

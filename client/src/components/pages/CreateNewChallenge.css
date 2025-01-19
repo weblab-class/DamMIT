@@ -1,0 +1,68 @@
+.CreateNewChallenge {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: var(--lightgray);
+}
+
+.CreateNewChallenge h2 {
+  text-align: center;
+  color: var(--darkblue);
+  font-size: var(--l);
+  margin-bottom: 20px;
+}
+
+.CreateNewChallenge form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.CreateNewChallenge .form-group {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.CreateNewChallenge .form-label {
+  font-size: var(--m);
+  color: var(--darkblue);
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+.CreateNewChallenge input,
+.CreateNewChallenge textarea {
+  width: 100%;
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
+  border: 1px solid var(--medblue);
+  border-radius: 4px;
+  font-size: var(--m);
+  color: var(--darkblue);
+  background-color: var(--blue);
+  margin: 0; /* Remove any default margin */
+}
+
+.CreateNewChallenge input {
+  padding: 20px;
+}
+
+.CreateNewChallenge textarea {
+  padding: 60px;
+}
+
+.CreateNewChallenge button {
+  width: auto;
+  padding: 10px;
+  background-color: var(--medblue);
+  border: none;
+  border-radius: 4px;
+  color: var(--white);
+  font-size: var(--l);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+}
+
+.CreateNewChallenge button:hover {
+  background-color: var(--darkblue);
+}
