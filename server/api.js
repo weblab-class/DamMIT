@@ -73,6 +73,72 @@ router.get("/user", (req, res) => {
     });
 });
 
+router.get("/user/:userId/likes", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.json(user.likedChallenges);
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.post("/challenge/:id/like", async (req, res) => {
+  try {
+    const { userId, like } = req.body;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    if (like) {
+      user.likedChallenges.addToSet(req.params.id);
+    } else {
+      user.likedChallenges.pull(req.params.id);
+    }
+
+    await user.save();
+    res.status(200).json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.post('/challenge/:id/todo', async (req, res) => {
+  try {
+    const { userId, addToTodo } = req.body;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    if (addToTodo) {
+      user.todoChallenges.addToSet(req.params.id);
+    } else {
+      user.todoChallenges.pull(req.params.id);
+    }
+
+    await user.save();
+    res.status(200).json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+router.get('/user/:userId/todos', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.json(user.todoChallenges);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
   console.log(`API route not found: ${req.method} ${req.url}`);

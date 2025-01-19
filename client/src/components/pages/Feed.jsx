@@ -10,14 +10,20 @@ const Feed = () => {
   const [challenges, setChallenges] = useState([]);
   const [sortOption, setSortOption] = useState('mostLiked');
 
-  // called when the "Feed" component "mounts", i.e.
-  // when it shows up on screen
   useEffect(() => {
-    document.title = "News Feed";
-    get("/api/challenges").then((challengeObjs) => {
-      setChallenges(challengeObjs);
-    });
-  }, []);
+    const fetchChallenges = async () => {
+      const challengeObjs = await get("/api/challenges");
+      const userLikes = await get(`/api/user/${props.userId}/likes`);
+      const userTodos = await get(`/api/user/${props.userId}/todos`);
+      const updatedChallenges = challengeObjs.map((challenge) => ({
+        ...challenge,
+        likedByUser: userLikes.includes(challenge._id),
+        addedToTodo: userTodos.includes(challenge._id),
+      }));
+      setChallenges(updatedChallenges);
+    };
+    fetchChallenges();
+  }, [props.userId]);
 
   const sortedChallenges = [...challenges].sort((a, b) => {
     if (sortOption === 'mostLiked') {
@@ -34,20 +40,7 @@ const Feed = () => {
   const hasChallenges = sortedChallenges.length !== 0;
   if (hasChallenges) {
     challengesList = sortedChallenges.map((challengeObj) => (
-      <Card
-        key={`Card_${challengeObj._id}`}
-        _id={challengeObj._id}
-        creator_name={challengeObj.creator_name}
-        creator_id={challengeObj.creator_id}
-        userId={props.userId}
-        content={challengeObj.content}
-        title={challengeObj.title}
-        likes={challengeObj.likes}
-        difficulty={challengeObj.difficulty}
-        likedByUser={challengeObj.likedByUser}
-        addedToTodo={challengeObj.addedToTodo}
-        num_completed={challengeObj.num_completed}
-      />
+      <Card key={challengeObj._id} {...challengeObj} userId={props.userId} />
     ));
   } else {
     challengesList = <div>No Challenges!</div>;

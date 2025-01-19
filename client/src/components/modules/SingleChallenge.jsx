@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaHeart, FaSquarePlus } from "react-icons/fa6";
+import { get, post } from "../../utilities";
 import "../../utilities.css";
 
 /**
@@ -17,19 +18,40 @@ import "../../utilities.css";
  * @param {boolean} likedByUser
  * @param {boolean} addedToTodo
  * @param {number} num_completed
+ * @param {string} userId
  */
 const SingleChallenge = (props) => {
   const [isLiked, setIsLiked] = useState(props.likedByUser);
   const [likes, setLikes] = useState(props.likes);
   const [isAddedToTodo, setIsAddedToTodo] = useState(props.addedToTodo);
 
-  const toggleLike = () => {
-    setIsLiked(!isLiked);
-    setLikes(isLiked ? likes - 1 : likes + 1);
+  const toggleLike = async () => {
+    const updatedLikeStatus = !isLiked;
+    setIsLiked(updatedLikeStatus);
+    setLikes(updatedLikeStatus ? likes + 1 : likes - 1);
+
+    try {
+      await post(`/api/challenge/${props._id}/like`, {
+        userId: props.userId,
+        like: updatedLikeStatus,
+      });
+    } catch (error) {
+      console.error("Error updating like status:", error);
+    }
   };
 
-  const toggleAddToTodo = () => {
-    setIsAddedToTodo(!isAddedToTodo);
+  const toggleAddToTodo = async () => {
+    const updatedTodoStatus = !isAddedToTodo;
+    setIsAddedToTodo(updatedTodoStatus);
+
+    try {
+      await post(`/api/challenge/${props._id}/todo`, {
+        userId: props.userId,
+        addToTodo: updatedTodoStatus,
+      });
+    } catch (error) {
+      console.error("Error updating to-do status:", error);
+    }
   };
 
   return (
@@ -38,14 +60,22 @@ const SingleChallenge = (props) => {
       <p className="Card-challengeContent">{props.content}</p>
       <div className="Card-challengeFooter">
         <div className="Card-challengeIcons">
-          <p className="Card-challengeLiked" onClick={toggleLike} style={{ cursor: "pointer" }}>
+          <p
+            className="Card-challengeLiked"
+            onClick={toggleLike}
+            style={{ cursor: "pointer" }}
+          >
             {isLiked ? (
               <FaHeart color="#e63946" size={30} />
             ) : (
               <FaHeart color="#457b9d" size={30} />
             )}
           </p>
-          <p className="Card-challengeTodo" onClick={toggleAddToTodo} style={{ cursor: "pointer" }}>
+          <p
+            className="Card-challengeTodo"
+            onClick={toggleAddToTodo}
+            style={{ cursor: "pointer" }}
+          >
             {isAddedToTodo ? (
               <FaSquarePlus color="#1d3557" size={30} />
             ) : (
@@ -54,11 +84,11 @@ const SingleChallenge = (props) => {
           </p>
         </div>
         <div className="Card-challengeDetails">
-          <p className="Card-challengeCompleted">
-            {props.num_completed} Completed
-          </p>
           <p className="Card-challengeDifficulty">
             Current Difficulty: {props.difficulty}
+          </p>
+          <p className="Card-challengeCompleted">
+            {props.num_completed} Completed
           </p>
           <p className="Card-challengeLikes">{likes} Likes</p>
         </div>
