@@ -1,8 +1,8 @@
 // App.jsx
 import React, { useState } from "react";
 import "./Profile.css";
-import ProfileCard from "../modules/profileCard";
-import "/Users/adembizid/work/skeleton/PauloHS-Silva-bizid777-volianyko/client/Adem.jpg";
+import ProfileCard from "../modules/profileCard.jsx";
+// import "/Users/adembizid/work/skeleton/PauloHS-Silva-bizid777-volianyko/client/Adem.jpg";
 
 const Profile = () => {
   const user = {
@@ -22,7 +22,7 @@ const Profile = () => {
       currentDifficulty: 2.43,
       completed: 234,
       likes: 617,
-      imageUrl: "Adem.jpg", // Placeholder image for profile picture
+      // imageUrl: "Adem.jpg", // Placeholder image for profile picture
     },
   };
 
