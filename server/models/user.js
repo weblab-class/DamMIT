@@ -5,6 +5,9 @@ const UserSchema = new mongoose.Schema({
   googleid: String,
   likedChallenges: [{ type: mongoose.Schema.Types.ObjectId, ref: "Challenge" }],
   todoChallenges: [{ type: mongoose.Schema.Types.ObjectId, ref: "Challenge" }],
+  completedChallenges: [
+    { type: mongoose.Schema.Types.ObjectId, ref: "Challenge" },
+  ],
 });
 
 // compile model from schema

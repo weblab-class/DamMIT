@@ -139,6 +139,39 @@ router.get('/user/:userId/todos', async (req, res) => {
   }
 });
 
+router.get('/user/:userId/completed', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.json(user.completedChallenges);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+router.post('/challenge/:id/complete', async (req, res) => {
+  try {
+    const { userId, complete } = req.body;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    if (complete) {
+      user.completedChallenges.addToSet(req.params.id);
+    } else {
+      user.completedChallenges.pull(req.params.id);
+    }
+
+    await user.save();
+    res.status(200).json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
   console.log(`API route not found: ${req.method} ${req.url}`);

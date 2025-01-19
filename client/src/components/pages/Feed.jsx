@@ -15,10 +15,12 @@ const Feed = () => {
       const challengeObjs = await get("/api/challenges");
       const userLikes = await get(`/api/user/${props.userId}/likes`);
       const userTodos = await get(`/api/user/${props.userId}/todos`);
+      const userCompleted = await get(`/api/user/${props.userId}/completed`);
       const updatedChallenges = challengeObjs.map((challenge) => ({
         ...challenge,
         likedByUser: userLikes.includes(challenge._id),
         addedToTodo: userTodos.includes(challenge._id),
+        completed: userCompleted.includes(challenge._id),
       }));
       setChallenges(updatedChallenges);
     };
@@ -40,7 +42,22 @@ const Feed = () => {
   const hasChallenges = sortedChallenges.length !== 0;
   if (hasChallenges) {
     challengesList = sortedChallenges.map((challengeObj) => (
-      <Card key={challengeObj._id} {...challengeObj} userId={props.userId} />
+      <Card
+        key={challengeObj._id}
+        _id={challengeObj._id}
+        creator_name={challengeObj.creator_name}
+        creator_id={challengeObj.creator_id}
+        title={challengeObj.title}
+        content={challengeObj.content}
+        likes={challengeObj.likes}
+        difficulty={challengeObj.difficulty}
+        likedByUser={challengeObj.likedByUser}
+        addedToTodo={challengeObj.addedToTodo}
+        completedByUser={challengeObj.completed}
+        num_completed={challengeObj.num_completed}
+        completed={challengeObj.completed}
+        userId={props.userId}
+      />
     ));
   } else {
     challengesList = <div>No Challenges!</div>;

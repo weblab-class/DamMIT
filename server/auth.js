@@ -29,6 +29,7 @@ function getOrCreateUser(user) {
       googleid: user.sub,
       likedChallenges: [],
       todoChallenges: [],
+      completedChallenges: [], // Initialize completedChallenges array for new users
     });
 
     return newUser.save();

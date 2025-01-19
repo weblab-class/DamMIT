@@ -100,3 +100,9 @@
   display: flex;
   gap: var(--m);
 }
+
+.Card-challengeComplete {
+  font-size: var(--l);
+  color: var(--medblue);
+  margin: var(--s) 0;
+}

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaHeart, FaSquarePlus } from "react-icons/fa6";
+import { FaHeart, FaSquarePlus, FaCircleCheck } from "react-icons/fa6";
 import { get, post } from "../../utilities";
 import "../../utilities.css";
 
@@ -18,12 +18,14 @@ import "../../utilities.css";
  * @param {boolean} likedByUser
  * @param {boolean} addedToTodo
  * @param {number} num_completed
+ * @param {boolean} completed
  * @param {string} userId
  */
 const SingleChallenge = (props) => {
   const [isLiked, setIsLiked] = useState(props.likedByUser);
   const [likes, setLikes] = useState(props.likes);
   const [isAddedToTodo, setIsAddedToTodo] = useState(props.addedToTodo);
+  const [isComplete, setIsComplete] = useState(props.completed);
 
   const toggleLike = async () => {
     const updatedLikeStatus = !isLiked;
@@ -54,6 +56,20 @@ const SingleChallenge = (props) => {
     }
   };
 
+  const toggleComplete = async () => {
+    const updatedCompleteStatus = !isComplete;
+    setIsComplete(updatedCompleteStatus);
+
+    try {
+      await post(`/api/challenge/${props._id}/complete`, {
+        userId: props.userId,
+        complete: updatedCompleteStatus,
+      });
+    } catch (error) {
+      console.error("Error updating complete status:", error);
+    }
+  };
+
   return (
     <div className="Card-challenge">
       <p className="Card-challengeTitle">{props.title}</p>
@@ -80,6 +96,17 @@ const SingleChallenge = (props) => {
               <FaSquarePlus color="#1d3557" size={30} />
             ) : (
               <FaSquarePlus color="#457b9d" size={30} />
+            )}
+          </p>
+          <p
+            className="Card-challengeComplete"
+            onClick={toggleComplete}
+            style={{ cursor: "pointer" }}
+          >
+            {isComplete ? (
+              <FaCircleCheck color="#1d3557" size={30} />
+            ) : (
+              <FaCircleCheck color="#457b9d" size={30} />
             )}
           </p>
         </div>

@@ -18,6 +18,7 @@ import "./Card.css";
  * @param {boolean} likedByUser
  * @param {boolean} addedToTodo
  * @param {number} num_completed
+ * @param {boolean} completed
  * @param {string} userId
  */
 const Card = (props) => {
@@ -34,6 +35,7 @@ const Card = (props) => {
         likedByUser={props.likedByUser}
         addedToTodo={props.addedToTodo}
         num_completed={props.num_completed}
+        completed={props.completed}
         userId={props.userId}
       />
     </div>
