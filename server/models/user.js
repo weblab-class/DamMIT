@@ -8,6 +8,16 @@ const UserSchema = new mongoose.Schema({
   completedChallenges: [
     { type: mongoose.Schema.Types.ObjectId, ref: "Challenge" },
   ],
+  classYear: Number,
+  major: String,
+  dorm: String,
+  percentRank: Number,
+  pointsRank: Number,
+
+  
+
+
+
 });
 
 // compile model from schema

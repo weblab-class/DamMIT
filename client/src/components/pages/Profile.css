@@ -29,16 +29,16 @@ body {
 }
 
 .pic {
-  margin: 20px 60px 20px 20px;
+  margin: 20px 100px 20px 20px;
 }
 .profile-section {
-  margin-bottom: 20px;
+  margin: 40px 40px 0px 20px;
   text-align: center;
 }
 
 .profile-stats p,
 .rankings p {
-  margin: 5px 20px;
+  margin: 5px 50px 20px 20px;
 }
 
 .edit-profile {
@@ -54,38 +54,6 @@ body {
   background-color: #0056b3;
 }
 
-.challenge-card {
-  background: #d8f3dc;
-  padding: 15px;
-  border-radius: 8px;
-}
-
-.challenge-actions {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex start;
-}
-
-.like-btn {
-  background: none;
-  border: none;
-  font-size: 18px;
-  cursor: pointer;
-  color: #e63946;
-}
-
-.like-btn:hover {
-  color: #d90429;
-}
-
-.difficulty-slider {
-  margin-top: 10px;
-}
-
-.challenge-stats p {
-  margin: 5px 0;
-  font-size: 14px;
-}
 .u-flex {
   display: flex;
 }

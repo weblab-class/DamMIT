@@ -9,7 +9,7 @@ const ChallengeSchema = new mongoose.Schema({
   title: String,
   likes: { type: Number, default: 0 },
   num_completed: { type: Number, default: 0 },
-  difficulty: { type: Number, default: 10 },
+  difficulty: { type: Number, default: 5 },
 });
 
 // compile model from schema
