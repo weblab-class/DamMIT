@@ -17,7 +17,8 @@
 }
 
 .tabs button:hover {
-  color: var(--darkblue);
+  color: var(--white);
+  background-color: var(--blue);
 }
 
 .tabs button.active {

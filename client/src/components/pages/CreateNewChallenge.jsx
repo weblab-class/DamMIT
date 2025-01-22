@@ -9,7 +9,7 @@ const CreateNewChallenge = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await post("/api/challenge", { title, description });
+      await post("/api/challenge/new", { title, description });
       setTitle("");
       setDescription("");
       alert("Challenge created successfully!");

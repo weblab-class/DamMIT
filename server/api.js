@@ -60,7 +60,8 @@ router.post("/challenge", auth.ensureLoggedIn, (req, res) => {
     title: req.body.title,
   });
 
-  newChallenge.save()
+  newChallenge
+    .save()
     .then((challenge) => res.send(challenge))
     .catch((err) => {
       console.error("Error saving challenge:", err);
@@ -90,17 +91,17 @@ router.get("/user/:userId/likes", async (req, res) => {
   }
 });
 
-router.post('/challenge/:id/like', async (req, res) => {
+router.post("/challenge/:id/like", async (req, res) => {
   try {
     const { userId, like } = req.body;
     const user = await User.findById(userId);
     if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+      return res.status(404).json({ error: "User not found" });
     }
 
     const challenge = await Challenge.findById(req.params.id);
     if (!challenge) {
-      return res.status(404).json({ error: 'Challenge not found' });
+      return res.status(404).json({ error: "Challenge not found" });
     }
 
     if (like) {
@@ -115,16 +116,16 @@ router.post('/challenge/:id/like', async (req, res) => {
     await challenge.save();
     res.status(200).json({ success: true });
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
-router.post('/challenge/:id/todo', async (req, res) => {
+router.post("/challenge/:id/todo", async (req, res) => {
   try {
     const { userId, addToTodo } = req.body;
     const user = await User.findById(userId);
     if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+      return res.status(404).json({ error: "User not found" });
     }
 
     if (addToTodo) {
@@ -136,45 +137,45 @@ router.post('/challenge/:id/todo', async (req, res) => {
     await user.save();
     res.status(200).json({ success: true });
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
-router.get('/user/:userId/todos', async (req, res) => {
+router.get("/user/:userId/todos", async (req, res) => {
   try {
     const user = await User.findById(req.params.userId);
     if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+      return res.status(404).json({ error: "User not found" });
     }
     res.json(user.todoChallenges);
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
-router.get('/user/:userId/completed', async (req, res) => {
+router.get("/user/:userId/completed", async (req, res) => {
   try {
     const user = await User.findById(req.params.userId);
     if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+      return res.status(404).json({ error: "User not found" });
     }
     res.json(user.completedChallenges);
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
-router.post('/challenge/:id/complete', async (req, res) => {
+router.post("/challenge/:id/complete", async (req, res) => {
   try {
     const { userId, complete } = req.body;
     const user = await User.findById(userId);
     if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+      return res.status(404).json({ error: "User not found" });
     }
 
     const challenge = await Challenge.findById(req.params.id);
     if (!challenge) {
-      return res.status(404).json({ error: 'Challenge not found' });
+      return res.status(404).json({ error: "Challenge not found" });
     }
 
     if (complete) {
@@ -189,11 +190,11 @@ router.post('/challenge/:id/complete', async (req, res) => {
     await challenge.save();
     res.status(200).json({ success: true });
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
-router.post('/challenge/new', async (req, res) => {
+router.post("/challenge/new", async (req, res) => {
   try {
     const { title, description } = req.body;
     const newChallenge = new Challenge({
@@ -207,11 +208,11 @@ router.post('/challenge/new', async (req, res) => {
     await newChallenge.save();
     res.status(201).json({ success: true, challenge: newChallenge });
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
-router.post('/signup', (req, res) => {
+router.post("/signup", (req, res) => {
   const { googleId, classYear, username, major, dorm } = req.body;
 
   const newUser = new User({
@@ -225,11 +226,14 @@ router.post('/signup', (req, res) => {
     completedChallenges: [],
   });
 
-  newUser.save()
+  newUser
+    .save()
     .then((user) => res.status(201).send(user))
     .catch((error) => {
-      console.error('Error creating user:', error);
-      res.status(400).send({ error: 'Error creating user', details: error.message });
+      console.error("Error creating user:", error);
+      res
+        .status(400)
+        .send({ error: "Error creating user", details: error.message });
     });
 });
 
