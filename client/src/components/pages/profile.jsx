@@ -1,7 +1,7 @@
 // App.jsx
 import React, { useState, useEffect } from "react";
 import "./Profile.css";
-import ProfileCard from "../modules/profileCard.jsx";
+import ProfileCard from "../modules/ProfileCard.jsx";
 import Card from "../modules/Card.jsx";
 import { useOutletContext } from "react-router-dom";
 import { get } from "../../utilities.js";
