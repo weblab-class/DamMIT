@@ -60,7 +60,12 @@ router.post("/challenge", auth.ensureLoggedIn, (req, res) => {
     title: req.body.title,
   });
 
-  newChallenge.save().then((challenge) => res.send(challenge));
+  newChallenge.save()
+    .then((challenge) => res.send(challenge))
+    .catch((err) => {
+      console.error("Error saving challenge:", err);
+      res.status(500).send("Internal Server Error");
+    });
 });
 
 router.get("/user", (req, res) => {
@@ -204,6 +209,28 @@ router.post('/challenge/new', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: 'Internal server error' });
   }
+});
+
+router.post('/signup', (req, res) => {
+  const { googleId, classYear, username, major, dorm } = req.body;
+
+  const newUser = new User({
+    name: username,
+    googleid: googleId,
+    classYear,
+    major,
+    dorm,
+    likedChallenges: [],
+    todoChallenges: [],
+    completedChallenges: [],
+  });
+
+  newUser.save()
+    .then((user) => res.status(201).send(user))
+    .catch((error) => {
+      console.error('Error creating user:', error);
+      res.status(400).send({ error: 'Error creating user', details: error.message });
+    });
 });
 
 // anything else falls to this "not found" case

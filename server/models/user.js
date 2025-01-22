@@ -13,11 +13,6 @@ const UserSchema = new mongoose.Schema({
   dorm: String,
   percentRank: Number,
   pointsRank: Number,
-
-  
-
-
-
 });
 
 // compile model from schema

@@ -18,11 +18,18 @@ function verify(token) {
     .then((ticket) => ticket.getPayload());
 }
 
+// gets user from DB, or returns null if it doesn't exist yet
+function getUser(user) {
+  return User.findOne({ googleid: user.sub }).then((existingUser) => {
+    return existingUser || null;
+  });
+}
+
 // gets user from DB, or makes a new account if it doesn't exist yet
 function getOrCreateUser(user) {
   // the "sub" field means "subject", which is a unique identifier for each user
   return User.findOne({ googleid: user.sub }).then((existingUser) => {
-    if (existingUser) return existingUser;
+    if (existingUser) return { user: existingUser, isNew: false };
 
     const newUser = new User({
       name: user.name,
@@ -32,21 +39,27 @@ function getOrCreateUser(user) {
       completedChallenges: [], // Initialize completedChallenges array for new users
     });
 
-    return newUser.save();
+    return newUser.save().then((user) => ({ user, isNew: true }));
   });
 }
 
 function login(req, res) {
   verify(req.body.token)
-    .then((user) => getOrCreateUser(user))
     .then((user) => {
-      // persist user in the session
-      req.session.user = user;
-      res.send(user);
+      return getUser(user).then((existingUser) => ({ user, existingUser }));
+    })
+    .then(({ user, existingUser }) => {
+      if (existingUser) {
+        req.session.user = existingUser;
+        res.send({ user: existingUser, isNew: false });
+      } else {
+        req.session.pendingUser = user;
+        res.send({ isNew: true });
+      }
     })
     .catch((err) => {
       console.log(`Failed to log in: ${err}`);
-      res.status(401).send({ err });
+      res.status(401).send({ err: "Unauthorized access" });
     });
 }
 

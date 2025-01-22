@@ -1,8 +1,15 @@
 .CreateNewChallenge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+}
+
+.CreateNewChallenge form {
+  width: 100%;
   max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: var(--lightgray);
 }
 
 .CreateNewChallenge h2 {
@@ -12,34 +19,32 @@
   margin-bottom: 20px;
 }
 
-.CreateNewChallenge form {
+.CreateNewChallenge .form-group {
   display: flex;
   flex-direction: column;
-  align-items: center;
-}
-
-.CreateNewChallenge .form-group {
+  align-items: flex-start;
   width: 100%;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  transform: translateX(8%);
 }
 
 .CreateNewChallenge .form-label {
-  font-size: var(--m);
-  color: var(--darkblue);
   margin-bottom: 5px;
   text-align: left;
+  font-size: var(--m);
+  color: var(--darkblue);
 }
 
 .CreateNewChallenge input,
 .CreateNewChallenge textarea {
   width: 100%;
-  box-sizing: border-box; /* Include padding and border in element's total width and height */
+  box-sizing: border-box;
   border: 1px solid var(--medblue);
   border-radius: 4px;
   font-size: var(--m);
   color: var(--darkblue);
   background-color: var(--blue);
-  margin: 0; /* Remove any default margin */
+  margin: 0;
 }
 
 .CreateNewChallenge input {
@@ -57,7 +62,7 @@
   border: none;
   border-radius: 4px;
   color: var(--white);
-  font-size: var(--l);
+  font-size: var(--m);
   cursor: pointer;
   transition: background-color 0.3s ease;
   margin-top: 20px;

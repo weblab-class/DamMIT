@@ -1,0 +1,52 @@
+.signin-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center items vertically */
+  align-items: center;
+  height: 100vh;
+  transform: translateY(-20%); /* Move content upwards by 20% */
+}
+
+h2 {
+  margin-bottom: 20px; /* Restore original margin for spacing */
+  color: var(--darkblue);
+  font-size: var(--xl);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.GoogleLogin {
+  margin-top: 10px; /* Maintain margin for spacing from title */
+}

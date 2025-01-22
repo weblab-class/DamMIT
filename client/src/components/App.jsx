@@ -20,9 +20,11 @@ const App = () => {
 
   useEffect(() => {
     get("/api/whoami").then((user) => {
-      if (user._id) {
-        // they are registed in the database, and currently logged in.
+      if (user && user._id) {
+        // they are registered in the database, and currently logged in.
         setUserId(user._id);
+      } else {
+        setUserId(undefined); // Ensure userId is undefined if not logged in
       }
     });
   }, []);
@@ -38,14 +40,12 @@ const App = () => {
   };
 
   const handleLogout = () => {
-    setUserId(undefined);
+    setUserId(undefined); // Clear userId on logout
     post("/api/logout");
   };
 
   return (
-    // <> is like a <div>, but won't show
-    // up in the DOM tree
-    <>
+    <UserContext.Provider value={{ userId, setUserId }}>
       <NavBar
         handleLogin={handleLogin}
         handleLogout={handleLogout}
@@ -54,7 +54,7 @@ const App = () => {
       <div className="App-container">
         <Outlet context={{ userId: userId }} />
       </div>
-    </>
+    </UserContext.Provider>
   );
 };
 

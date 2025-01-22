@@ -1,10 +1,10 @@
 // App.jsx
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./Profile.css";
 import ProfileCard from "../modules/profileCard.jsx";
-import Card from "../modules/Card";
+import Card from "../modules/Card.jsx";
 import { useOutletContext } from "react-router-dom";
-import { get } from "../../utilities";
+import { get } from "../../utilities.js";
 import "./ToDoList.css";
 
 // import "/Users/adembizid/work/skeleton/PauloHS-Silva-bizid777-volianyko/client/Adem.jpg";
@@ -19,7 +19,7 @@ const Profile = () => {
     difficultyPoints: 1345,
     percentRank: "2nd",
     pointsRank: "3rd",
-    //missing an image 
+    //missing an image
     // posts he liked
   };
   const props = useOutletContext();
@@ -47,7 +47,6 @@ const Profile = () => {
   const filteredChallenges = likedChallenges.filter((challenge) => {
     return challenge.likedByUser; // all challenges
   });
-
 
   return (
     <div className="overall">

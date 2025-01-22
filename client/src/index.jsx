@@ -8,6 +8,8 @@ import Feed from "./components/pages/Feed";
 import ToDoList from "./components/pages/ToDoList";
 import Leaderboard from "./components/pages/Leaderboard";
 import CreateNewChallenge from "./components/pages/CreateNewChallenge";
+import SignIn from "./components/pages/SignIn";
+import SignUp from "./components/pages/SignUp";
 
 import {
   createBrowserRouter,
@@ -31,6 +33,8 @@ const router = createBrowserRouter(
       <Route path="/todo/" element={<ToDoList />} />
       <Route path="/leaderboard/" element={<Leaderboard />} />
       <Route path="/newchallenge/" element={<CreateNewChallenge />} />
+      <Route path="/signin/" element={<SignIn />} />
+      <Route path="/signup/" element={<SignUp />} />
     </Route>
   )
 );
