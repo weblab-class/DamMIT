@@ -6,7 +6,7 @@ import NotFound from "./components/pages/NotFound";
 import Profile from "./components/pages/profile";
 import Feed from "./components/pages/Feed";
 import ToDoList from "./components/pages/ToDoList";
-import Leaderboard from "./components/pages/leaderboard";
+import Leaderboard from "./components/pages/Leaderboard";
 import CreateNewChallenge from "./components/pages/CreateNewChallenge";
 import SignIn from "./components/pages/SignIn";
 import SignUp from "./components/pages/SignUp";

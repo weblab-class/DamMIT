@@ -3,7 +3,8 @@ import "./SignIn.css";
 import jwt_decode from "jwt-decode";
 import { GoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from '../../components/App';
+import { UserContext } from "../../components/App";
+import { post } from "../../utilities";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -14,14 +15,7 @@ const SignIn = () => {
     const decodedCredential = jwt_decode(userToken);
     console.log(`Logged in as ${decodedCredential.name}`);
 
-    fetch("/api/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ token: userToken }),
-    })
-      .then((res) => res.json())
+    post("/api/login", { token: userToken })
       .then(({ user, isNew }) => {
         console.log("User data:", user);
         if (isNew) {
@@ -29,6 +23,7 @@ const SignIn = () => {
         } else {
           setUserId(user._id); // Update user context
           // Handle successful login
+          navigate("/");
         }
       })
       .catch((error) => {

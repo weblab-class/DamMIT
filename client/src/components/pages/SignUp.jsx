@@ -1,26 +1,26 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext } from "react";
 import { useLocation } from "react-router-dom";
-import { UserContext } from '../../components/App';
-import './SignUp.css';
+import { UserContext } from "../../components/App";
+import "./SignUp.css";
 
 const SignUp = () => {
   const location = useLocation();
   const googleId = location.state?.googleId || "";
 
-  const [classYear, setClassYear] = useState('');
-  const [username, setUsername] = useState('');
-  const [major, setMajor] = useState('');
-  const [dorm, setDorm] = useState('');
+  const [classYear, setClassYear] = useState("");
+  const [username, setUsername] = useState("");
+  const [major, setMajor] = useState("");
+  const [dorm, setDorm] = useState("");
 
   const { setUserId } = useContext(UserContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Send sign-up data to the server
-    fetch('/api/signup', {
-      method: 'POST',
+    fetch("/api/signup", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         googleId,
@@ -32,13 +32,14 @@ const SignUp = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log('User created:', data);
+        console.log("User created:", data);
         setUserId(data._id); // Update user context
         // Redirect or handle post-sign-up actions
       })
       .catch((error) => {
-        console.error('Error signing up:', error);
+        console.error("Error signing up:", error);
       });
+    navigate("/");
   };
 
   return (
