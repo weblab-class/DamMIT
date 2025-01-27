@@ -220,7 +220,7 @@ router.get('/users', async (req, res) => {
 
 router.post("/challenge/new", async (req, res) => {
   try {
-    const { title, description } = req.body;
+    const { title, description, difficulty } = req.body;
     const newChallenge = new Challenge({
       title,
       content: description,
@@ -228,6 +228,7 @@ router.post("/challenge/new", async (req, res) => {
       creator_name: req.user.name, // Assuming user is authenticated
       likes: 0,
       num_completed: 0,
+      difficulty
     });
     await newChallenge.save();
     res.status(201).json({ success: true, challenge: newChallenge });
