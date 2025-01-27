@@ -1,11 +1,12 @@
 import React, { useState, useContext } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { UserContext } from "../../components/App";
 import "./SignUp.css";
 
 const SignUp = () => {
   const location = useLocation();
   const googleId = location.state?.googleId || "";
+  const navigate = useNavigate();
 
   const [classYear, setClassYear] = useState("");
   const [username, setUsername] = useState("");
@@ -34,12 +35,11 @@ const SignUp = () => {
       .then((data) => {
         console.log("User created:", data);
         setUserId(data._id); // Update user context
-        // Redirect or handle post-sign-up actions
+        navigate(`/profile/${data._id}`); // Redirect to profile page
       })
       .catch((error) => {
         console.error("Error signing up:", error);
       });
-    navigate("/");
   };
 
   return (

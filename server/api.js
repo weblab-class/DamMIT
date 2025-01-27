@@ -69,13 +69,17 @@ router.post("/challenge", auth.ensureLoggedIn, (req, res) => {
     });
 });
 
-router.get("/user", (req, res) => {
-  User.findById(req.query.userid)
+router.get("/user/:userId", (req, res) => {
+  User.findById(req.params.userId)
     .then((user) => {
+      if (!user) {
+        return res.status(404).send("User not found");
+      }
       res.send(user);
     })
     .catch((err) => {
-      res.status(500).send("User Not");
+      console.error("Error fetching user:", err);
+      res.status(500).send("Internal Server Error");
     });
 });
 
@@ -87,6 +91,16 @@ router.get("/user/:userId/likes", async (req, res) => {
     }
     res.json(user.likedChallenges);
   } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.get("/user/:userId/created", async (req, res) => {
+  try {
+    const challenges = await Challenge.find({ creator_id: req.params.userId });
+    res.json(challenges);
+  } catch (error) {
+    console.error("Error fetching created challenges:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
@@ -194,6 +208,16 @@ router.post("/challenge/:id/complete", async (req, res) => {
   }
 });
 
+router.get('/users', async (req, res) => {
+  try {
+    const users = await User.find({});
+    res.json(users);
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 router.post("/challenge/new", async (req, res) => {
   try {
     const { title, description } = req.body;
@@ -209,6 +233,32 @@ router.post("/challenge/new", async (req, res) => {
     res.status(201).json({ success: true, challenge: newChallenge });
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.post("/user/update", async (req, res) => {
+  try {
+    const { userId, name, major, dorm, classYear, completionRate, difficultyPoints } = req.body;
+    console.log("Received update request for user:", userId);
+    const user = await User.findByIdAndUpdate(userId, {
+      name,
+      major,
+      dorm,
+      classYear,
+      completionRate,
+      difficultyPoints
+    }, { new: true });
+
+    if (user) {
+      console.log("User updated successfully:", user);
+      res.json({ success: true, message: "User information updated successfully." });
+    } else {
+      console.error("User not found:", userId);
+      res.status(404).json({ success: false, message: "User not found." });
+    }
+  } catch (error) {
+    console.error("Error updating user information:", error);
+    res.status(500).json({ success: false, message: "Internal server error." });
   }
 });
 

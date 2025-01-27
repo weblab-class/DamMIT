@@ -1,105 +1,67 @@
-// App.jsx
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Leaderboard.css";
-import "./Feed.css";
 
 const Leaderboard = () => {
-  const [showClassYearDropdown, setShowClassYearDropdown] = React.useState(false);
-  const [showCategoryDropdown, setShowCategoryDropdown] = React.useState(false);
-  // const [users, setUsers] = useState([]);
-  // const [sortBy, setSortBy] = useState('points')
-  // Fetch users data when component mounts
-  // useEffect(() => {
-  //   // Replace with your actual API endpoint
-  //   fetch('/api/users')
-  //     .then(res => res.json())
-  //     .then(data => setUsers(data))
-  //     .catch(err => console.log(err));
-  // }, []);
-  // Sort users based on criteria
-  // const sortedUsers = [...users].sort((a, b) => {
-  //   if (sortBy === 'points') {
-  //     return b.difficultyPoints - a.difficultyPoints;
-  //   }
-  //   return b.completionRate - a.completionRate;
-  // });
+  const [users, setUsers] = useState([]);
+  const [sortOption, setSortOption] = useState('difficultyPoints');
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch('/api/users');
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log("Fetched users:", data); // Log the fetched data
+        if (Array.isArray(data)) {
+          const sortedUsers = data.sort((a, b) => {
+            if (sortOption === 'difficultyPoints') {
+              return (b.difficultyPoints || 0) - (a.difficultyPoints || 0);
+            }
+            return (b.completionRate || 0) - (a.completionRate || 0);
+          });
+          setUsers(sortedUsers);
+          console.log("Sorted users:", sortedUsers); // Log the sorted users
+        } else {
+          console.error("API response is not an array:", data);
+        }
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+    fetchUsers();
+  }, [sortOption]);
+
   return (
-    <div className="container">
-      <div className="search-container ">
-        <input
-          type="text"
-          className="search-bar"
-          placeholder="Search a challenger or enter a score"
-        />
+    <div className="leaderboard-container">
+      <h1>Leaderboard</h1>
+      <div className="tabs">
+        <button className={sortOption === 'difficultyPoints' ? 'active' : ''} onClick={() => setSortOption('difficultyPoints')}>Total Difficulty Points</button>
+        <button className={sortOption === 'completionRate' ? 'active' : ''} onClick={() => setSortOption('completionRate')}>Completion Rate</button>
       </div>
-
-      <div className="tabs dropdown">
-        <div className="dropdown">
-            <button calssName="buttons" onClick={() => setShowClassYearDropdown(!showClassYearDropdown)}>
-              Class year
-            </button>
-            {showClassYearDropdown && (
-              <div className="dropdown-content">
-                <button>2025</button>
-                <button>2026</button>
-                <button>2027</button>
-                <button>2028</button>
-              </div>
-            )}
-        </div>
-        <div className="dropdown">
-            <button onClick={() => setShowCategoryDropdown(!showCategoryDropdown)}>
-              Category
-            </button>
-            {showCategoryDropdown && (
-              <div className="dropdown-content">
-                <button>number of challenges</button>
-                <button>difficulty</button>
-              </div>
-            )}
-        </div>
-      </div>
-
       <table className="leaderboard">
         <thead>
-        {/* {sortedUsers.map((user, index) => (
-            <tr key={user._id}>
-              <td>{index + 1}</td>
-              <td>{user.username}</td>
-              <td>{user.completionRate}%</td>
-              <td>{user.difficultyPoints}</td>
-              <td>{user.major}</td>
-              <td>{user.classyear}</td> */}
           <tr>
-            <th>Ranking </th>
-            <th>Username</th>
-            <th>Score </th>
-            <th>Major 🎓</th>
-            <th>Class year</th>
+            <th>Rank</th>
+            <th>Name</th>
+            <th>Class Year</th>
+            <th>Major</th>
+            <th>Dorm</th>
+            <th>Score</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Adem</td>
-            <td>1</td>
-            <td>123</td>
-            <td>Computer Science</td>
-            <td>28'</td>
-          </tr>
-          <tr>
-            <td>Olya</td>
-            <td>1</td>
-            <td>123</td>
-            <td>Computer Science</td>
-            <td>28'</td>
-          </tr>
-          <tr>
-            <td>Paulo</td>
-            <td>1</td>
-            <td>123</td>
-            <td>Computer Science</td>
-            <td>28'</td>
-          </tr>
+          {users.map((user, index) => (
+            <tr key={user._id}>
+              <td>{index + 1}</td>
+              <td>{user.name || 'N/A'}</td>
+              <td>{user.classYear || 'N/A'}</td>
+              <td>{user.major || 'N/A'}</td>
+              <td>{user.dorm || 'N/A'}</td>
+              <td>{sortOption === 'difficultyPoints' ? (user.difficultyPoints || 0) : (user.completionRate || 0) + '%'}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

@@ -2,17 +2,18 @@ const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema({
   name: String,
+  username: String,
   googleid: String,
-  likedChallenges: [{ type: mongoose.Schema.Types.ObjectId, ref: "Challenge" }],
-  todoChallenges: [{ type: mongoose.Schema.Types.ObjectId, ref: "Challenge" }],
-  completedChallenges: [
-    { type: mongoose.Schema.Types.ObjectId, ref: "Challenge" },
-  ],
   classYear: Number,
   major: String,
   dorm: String,
-  percentRank: Number,
-  pointsRank: Number,
+  percentRank: { type: Number, default: 0 },
+  pointsRank: { type: Number, default: 0 },
+  completionRate: { type: Number, default: 0 },
+  difficultyPoints: { type: Number, default: 0 },
+  completedChallenges: { type: [String], default: [] },
+  likedChallenges: { type: [String], default: [] },
+  todoChallenges: { type: [String], default: [] },
 });
 
 // compile model from schema
