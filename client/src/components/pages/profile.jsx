@@ -102,7 +102,8 @@ const Profile = () => {
       , 0)
     : 0;
 
-  const rankPercentage = allUsers.length > 0 ? Math.max(1, Math.round((allUsers.filter(user => user.completionRate < completionRate).length / allUsers.length) * 100)) : 1;
+  const sortedByCompletionRate = [...allUsers].sort((a, b) => b.completionRate - a.completionRate);
+  const rankPercentage = sortedByCompletionRate.findIndex(user => user._id === userId) + 1;
 
   const pointsRank = allUsers.length > 0 ? allUsers.sort((a, b) => b.difficultyPoints - a.difficultyPoints).findIndex(user => user._id === userId) + 1 : 0;
 
